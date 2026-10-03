@@ -1,0 +1,36 @@
+CSV Rescue - Change Report
+==========================
+
+Rows before cleaning: 4
+Rows after cleaning: 3
+Columns: id, name, joined, city
+
+Operations applied
+------------------
+1. [op_001] trim_whitespace
+   Reason: Extra spaces found.
+   Result: 2 cell(s) trimmed
+   Rows: 4 -> 4
+2. [op_002] remove_duplicates
+   Reason: Duplicate rows found.
+   Result: 1 duplicate row(s) removed (row indexes: [2])
+   Rows: 4 -> 3
+3. [op_003] standardize_missing
+   Reason: NA markers found.
+   Result: 1 missing-value marker(s) set to empty
+   Rows: 3 -> 3
+4. [op_004] normalize_dates
+   Reason: Standardize dates.
+   Result: 2 date(s) converted from %d/%m/%Y; 1 value(s) in 'joined' could not be converted and were kept (row indexes: [3])
+   Rows: 3 -> 3
+
+Validation: PASSED
+------------------
+PASS  original_separate: Cleaned data is a separate copy from the original.
+PASS  row_count_matches_log: Expected 3 rows from the log, found 3.
+PASS  columns_match_log: Column names match the renames recorded in the log.
+PASS  log_matches_plan: Change log lists the same operations as the approved plan, in order.
+
+Unresolved issues
+-----------------
+None.

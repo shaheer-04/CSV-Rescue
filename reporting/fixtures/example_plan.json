@@ -1,0 +1,35 @@
+[
+  {
+    "id": "op_001",
+    "operation": "trim_whitespace",
+    "columns": [
+      "name"
+    ],
+    "reason": "Extra spaces found."
+  },
+  {
+    "id": "op_002",
+    "operation": "remove_duplicates",
+    "reason": "Duplicate rows found."
+  },
+  {
+    "id": "op_003",
+    "operation": "standardize_missing",
+    "columns": [
+      "city"
+    ],
+    "markers": [
+      "NA"
+    ],
+    "reason": "NA markers found."
+  },
+  {
+    "id": "op_004",
+    "operation": "normalize_dates",
+    "columns": [
+      "joined"
+    ],
+    "input_format": "%d/%m/%Y",
+    "reason": "Standardize dates."
+  }
+]
