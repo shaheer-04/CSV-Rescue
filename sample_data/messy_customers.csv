@@ -1,0 +1,21 @@
+customer_id,customer_name,email,city,registration_date,amount_spent,status
+00123,  Ali Khan ,ali.khan@example.com,Peshawar,03/04/2026,"$1,200.50",active
+00124,Sara Ahmed,sara.ahmed@example.com,lahore,05/06/2026,$850.00,Active
+00125,  Bilal  Hussain,bilal.h@example.com,Karachi,07/08/2026,"$2,300.75",ACTIVE
+00126,Ayesha Noor,NA,Islamabad,01/02/2026,$410.00,inactive
+00127,Usman Tariq,usman.t@example.com,PESHAWAR,not a date,$95.25,active
+00128,Hina Malik ,hina.m@example.com,Quetta,09/10/2026,"$1,075.00",active
+00129,Zain Abbas,N/A,Lahore,04/05/2026,$0.00,inactive
+00130,Fatima Shah,fatima.s@example.com,karachi,06/07/2026,"$3,450.00",active
+00123,  Ali Khan ,ali.khan@example.com,Peshawar,03/04/2026,"$1,200.50",active
+00131,Omar Farooq,omar.f@example.com,Multan,02/03/2026,$600.00,null
+00132,Maryam Iqbal,maryam.i@example.com,Peshawar ,08/09/2026,$720.40,active
+00133,Hamza Rauf,,Faisalabad,10/11/2026,$150.00,active
+00134,Nida Saleem,nida.s@example.com,Lahore,11/12/2026,"$1,980.00",inactive
+00135,Imran Zafar,-,Rawalpindi,12/01/2026,$330.10,active
+00136,Sana Javed,sana.j@example.com,Karachi,01/03/2026,$505.55,Active
+00127,Usman Tariq,usman.t@example.com,PESHAWAR,not a date,$95.25,active
+00137,Kamran Butt,kamran.b@example.com,Sialkot,02/04/2026,"$4,100.00",active
+00138,  Rabia Anwar,rabia.a@example.com,Lahore,03/05/2026,$275.00,unknown
+00139,Tariq Mehmood,tariq.m@example.com,Peshawar,04/06/2026,$890.90,active
+00140,Laiba Siddiqui,laiba.s@example.com,Islamabad,05/07/2026,"$1,120.00",active
