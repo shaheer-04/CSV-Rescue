@@ -1,5 +1,6 @@
 from hashlib import sha256
 from pathlib import Path
+from ui.cleaning_panel import render_cleaning_panel
 
 import pandas as pd
 import streamlit as st
@@ -33,6 +34,7 @@ def clear_dataset_state():
         "exports",
         "goal",
         "inspection_column",
+        "manual_cleaning_result",
     ):
         st.session_state.pop(key, None)
 
@@ -249,6 +251,12 @@ st.text_area(
 )
 
 st.caption(
-    "Goal capture is ready. AI planning and approved cleaning "
-    "will be connected in the next integration step."
+    "Your goal is saved for the upcoming AI planner. "
+    "For now, configure cleaning explicitly below."
+)
+
+render_cleaning_panel(
+    original=dataset,
+    source_name=st.session_state["source_name"],
+    input_signature=st.session_state["input_signature"],
 )
