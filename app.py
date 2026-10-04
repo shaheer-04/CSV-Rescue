@@ -1,6 +1,7 @@
 from hashlib import sha256
 from pathlib import Path
 from ui.cleaning_panel import render_cleaning_panel
+from ui.ai_panel import render_ai_panel
 
 import pandas as pd
 import streamlit as st
@@ -35,6 +36,7 @@ def clear_dataset_state():
         "goal",
         "inspection_column",
         "manual_cleaning_result",
+        "ai_revision",
     ):
         st.session_state.pop(key, None)
 
@@ -72,11 +74,11 @@ with st.sidebar:
              "utf-16", "cp1252", "latin-1"],
         )
 
-    st.caption(
-        "This screen does not call an AI service. "
-        "Values are loaded as text to preserve leading zeros."
+        st.caption(
+        "Values are loaded as text to preserve leading zeros. "
+        "AI mode sends profiles and limited samples to Groq "
+        "only when you request a plan."
     )
-
 delimiters = {
     "Automatic": None,
     "Comma": ",",
@@ -241,22 +243,51 @@ with columns_tab:
         st.json(details["profile"])
 
 st.subheader("What would you like to clean?")
-st.text_area(
-    "Describe your goal",
-    placeholder=(
-        "For example: trim customer names, remove duplicate "
-        "rows, and standardize registration dates."
-    ),
-    key="goal",
+mode = st.radio(
+    "Cleaning mode",
+    ["AI planner", "Manual controls"],
+    horizontal=True,
+    key="cleaning_mode",
 )
 
-st.caption(
-    "Your goal is saved for the upcoming AI planner. "
-    "For now, configure cleaning explicitly below."
-)
+# Remove stale results and approvals when switching modes.
+if st.session_state.get("previous_cleaning_mode") != mode:
+    st.session_state.pop("ai_bundle", None)
+    st.session_state.pop("ai_cleaning_result", None)
+    st.session_state.pop("manual_cleaning_result", None)
 
-render_cleaning_panel(
-    original=dataset,
-    source_name=st.session_state["source_name"],
-    input_signature=st.session_state["input_signature"],
-)
+    for state_key in list(st.session_state):
+        if (
+            state_key.startswith(("manual_", "ai_"))
+            and state_key.endswith(("_approval", "_approval_token"))
+        ):
+            st.session_state.pop(state_key, None)
+
+    st.session_state["previous_cleaning_mode"] = mode
+
+if mode == "AI planner":
+    st.subheader("What would you like to clean?")
+
+    goal = st.text_area(
+        "Describe your goal",
+        placeholder=(
+            "Trim customer_name and email, then remove "
+            "exact duplicate rows."
+        ),
+        key="goal",
+    )
+
+    render_ai_panel(
+        original=dataset,
+        profile=profile,
+        source_name=st.session_state["source_name"],
+        input_signature=st.session_state["input_signature"],
+        goal=goal,
+    )
+
+else:
+    render_cleaning_panel(
+        original=dataset,
+        source_name=st.session_state["source_name"],
+        input_signature=st.session_state["input_signature"],
+    )

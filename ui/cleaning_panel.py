@@ -185,7 +185,29 @@ def render_cleaning_panel(original, source_name, input_signature):
                     "User approved the complete header mapping.",
                     mapping=mapping,
                 )
+        render_approved_plan(
+        original=original,
+        source_name=source_name,
+        input_signature=input_signature,
+        plan=plan,
+    )
 
+
+def render_approved_plan(
+    original,
+    source_name,
+    input_signature,
+    plan,
+    namespace="manual",
+):
+    """Display, approve, execute, and export an already prepared plan."""
+    source_token = hashlib.sha256(
+        repr(input_signature).encode()
+    ).hexdigest()[:16]
+
+    def key(name):
+        return f"{namespace}_{source_token}_{name}"
+    
     # The displayed plan is the exact plan that execution will use.
     plan_json = json.dumps(plan, sort_keys=True, ensure_ascii=False)
     execution_token = hashlib.sha256(
@@ -193,7 +215,7 @@ def render_cleaning_panel(original, source_name, input_signature):
     ).hexdigest()
 
     # Editing any executable operation invalidates previous results.
-    result_key = "manual_cleaning_result"
+    result_key = f"{namespace}_cleaning_result"
     previous = st.session_state.get(result_key)
     if previous and previous["token"] != execution_token:
         st.session_state.pop(result_key, None)
